@@ -80,7 +80,7 @@ describe("Testing the app endpoints", () => {
         name: "MaestroJtapio"
     }
 
-    it("should check that the PUT /product/:id endpoint updates a product and that the data has been changed", async () => {
+    it("should check that the PUT /product/:id endpoint updates a product and that the data has been changed and is a string", async () => {
         const fetchOriginalProductsArray = await request.get("/products");
                const id = fetchOriginalProductsArray.body[0]._id.toString()
                console.log(id)
@@ -88,9 +88,15 @@ describe("Testing the app endpoints", () => {
         console.log(response)
         const checkProductChange = await request.get(`/products/${id}`)
 
-
         expect(response.status).toBe(201);
+        expect(typeof checkProductChange.body.name).toBe("string");
         expect(checkProductChange.body.name).toBe("MaestroJtapio");
+    })
+    it("should check that the PUT /product/:id with an invalid ID results in a 404", async () => {  
+        const response = await request.get(`/products/666`)
+      console.log(response)
+
+        expect(response.status).toBe(404);
     })
 
 
