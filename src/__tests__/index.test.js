@@ -67,7 +67,7 @@ describe("Testing the app endpoints", () => {
         console.log(response)
 
         expect(response.status).toBe(200);
-        expect(response.body.length).toBeGreaterThan(0);
+        // expect(response.body.length).toBeGreaterThan(0);
     })
 
     it("should check that the GET /products/:id endpoint returns 404 if the product ID doesn't exist", async () => {
@@ -75,6 +75,43 @@ describe("Testing the app endpoints", () => {
 
         expect(response.status).toBe(404);
     })
+
+    const updatedProductName = {
+        name: "MaestroJtapio"
+    }
+
+    it("should check that the PUT /product/:id endpoint updates a product and that the data has been changed", async () => {
+        const fetchOriginalProductsArray = await request.get("/products");
+               const id = fetchOriginalProductsArray.body[0]._id.toString()
+               console.log(id)
+        const response = await request.put(`/products/${id}`).send(updatedProductName)
+        console.log(response)
+        const checkProductChange = await request.get(`/products/${id}`)
+
+
+        expect(response.status).toBe(201);
+        expect(checkProductChange.body.name).toBe("MaestroJtapio");
+    })
+
+
+    it("should check that the DELETE /product/:id endpoint returns a 204 status code", async () => {
+        const fetchProducts = await request.get("/products");
+               const id = fetchProducts.body[0]._id.toString()
+               console.log(id)
+               console.log(fetchProducts.body)
+        const response = await request.delete(`/products/${id}`)
+        console.log(response)
+
+        expect(response.status).toBe(204);
+    })
+
+    it("should check that the DELETE /products/:id endpoint returns 404 if the product ID doesn't exist AND cannot be deleted", async () => {
+        const response = await request.delete("/products/123");
+
+        expect(response.status).toBe(404);
+    })
+
+
 
 
     afterAll(done => {
