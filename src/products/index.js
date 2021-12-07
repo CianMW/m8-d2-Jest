@@ -36,7 +36,22 @@ productsRouter
       //   next(createHttpError(404, `post: ${id} not found!`))
       // }
     } catch (error) {
-     res.status(404)
+     res.status(404).send()
+    }
+  })
+  .put("/:id", async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const updatedPost = await ProductModel.findByIdAndUpdate(id, req.body, { new: true })
+
+      if (updatedPost) {
+        res.status(201).send(updatedPost)
+      } 
+      // else {
+      //   next(createHttpError(404, `product: ${id} not found!`))
+      // }
+    } catch (error) {
+     res.status(404).send()
     }
   })
 

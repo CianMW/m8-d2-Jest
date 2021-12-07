@@ -76,6 +76,24 @@ describe("Testing the app endpoints", () => {
         expect(response.status).toBe(404);
     })
 
+    const updatedProductName = {
+        name: "MaestroJtapio"
+    }
+
+    it("should check that the PUT /product/:id endpoint updates a product and that the data has been changed", async () => {
+        const fetchOriginalProductsArray = await request.get("/products");
+               const id = fetchOriginalProductsArray.body[0]._id.toString()
+               console.log(id)
+        const response = await request.put(`/products/${id}`).send(updatedProductName)
+        console.log(response)
+        const checkProductChange = await request.get(`/products/${id}`)
+
+
+        expect(response.status).toBe(201);
+        expect(checkProductChange.body.name).toBe("MaestroJtapio");
+    })
+
+
     it("should check that the DELETE /product/:id endpoint returns a 204 status code", async () => {
         const fetchProducts = await request.get("/products");
                const id = fetchProducts.body[0]._id.toString()
@@ -92,6 +110,9 @@ describe("Testing the app endpoints", () => {
 
         expect(response.status).toBe(404);
     })
+
+
+
 
     afterAll(done => {
         mongoose.connection.dropDatabase()
