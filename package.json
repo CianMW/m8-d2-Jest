@@ -1,0 +1,29 @@
+{
+  "name": "fs-aug21-jest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watchAll",
+    "dev": "nodemon -r dotenv/config ./src/index.js",
+    "start": "node ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-list-endpoints": "^6.0.0",
+    "mongoose": "^6.0.15"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "jest": "^27.4.3",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
+  }
+}
