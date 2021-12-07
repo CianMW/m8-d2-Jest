@@ -23,6 +23,22 @@ productsRouter
     const product = new ProductModel(req.body);
     await product.save();
     res.status(201).send(product);
-  });
+  })
+  .delete("/:id", async (req, res) => {
+    try {
+      const id = req.params.id
+      const deletedPost = await ProductModel.deleteOne({_id: id})
+
+      if (deletedPost) {
+        res.status(204).send(`Post with id: ${id} has been deleted `)
+      }
+      // } else {
+      //   next(createHttpError(404, `post: ${id} not found!`))
+      // }
+    } catch (error) {
+     res.status(404)
+    }
+  })
+
 
 export default productsRouter;
