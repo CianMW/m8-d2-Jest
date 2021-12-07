@@ -38,6 +38,8 @@ describe("Testing the app endpoints", () => {
         expect(response.body.message).toBe("Test successful");
     })
 
+//POST NEW PRODUCT AND GET ALL TESTS
+
     const validProduct = {
         name: "Test Product",
         price: 200,
@@ -58,6 +60,9 @@ describe("Testing the app endpoints", () => {
         expect(response.status).toBe(200);
         expect(response.body.length).toBeGreaterThan(0);
     })
+
+//GET BY ID TESTS
+
     it("should check that the GET /product/:id endpoint returns a product with a valid ID", async () => {
         const fetchProducts = await request.get("/products");
                const id = fetchProducts.body[0]._id.toString()
@@ -76,6 +81,9 @@ describe("Testing the app endpoints", () => {
         expect(response.status).toBe(404);
     })
 
+//UPDATE TESTS
+
+
     const updatedProductName = {
         name: "MaestroJtapio"
     }
@@ -93,7 +101,7 @@ describe("Testing the app endpoints", () => {
         expect(checkProductChange.body.name).toBe("MaestroJtapio");
     })
 
-
+//DELETE TESTS
     it("should check that the DELETE /product/:id endpoint returns a 204 status code", async () => {
         const fetchProducts = await request.get("/products");
                const id = fetchProducts.body[0]._id.toString()
