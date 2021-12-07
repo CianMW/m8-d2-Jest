@@ -58,6 +58,23 @@ describe("Testing the app endpoints", () => {
         expect(response.status).toBe(200);
         expect(response.body.length).toBeGreaterThan(0);
     })
+    it("should check that the GET /product/:id endpoint returns a product with a valid ID", async () => {
+        const fetchProducts = await request.get("/products");
+               const id = fetchProducts.body[0]._id.toString()
+               console.log(id)
+               console.log(fetchProducts.body)
+        const response = await request.get(`/products/${id}`)
+        console.log(response)
+
+        expect(response.status).toBe(200);
+        expect(response.body.length).toBeGreaterThan(0);
+    })
+
+    it("should check that the GET /products/:id endpoint returns 404 if the product ID doesn't exist", async () => {
+        const response = await request.get("/products/123");
+
+        expect(response.status).toBe(404);
+    })
 
 
     afterAll(done => {
