@@ -1,7 +1,9 @@
 import express from "express";
-import { ProductModel } from "./model.js";
-
+import { ProductModel } from "./schema";
+import { IProduct } from "../interfaces";
 const productsRouter = express.Router();
+
+
 
 productsRouter
   .get("/", async (req, res, next) => {
@@ -57,3 +59,4 @@ productsRouter
 
 
 export default productsRouter;
+
